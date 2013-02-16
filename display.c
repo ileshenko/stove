@@ -130,10 +130,19 @@ void display_int(unsigned char val)
 
 }
 
-void display_time(signed char d_h, signed char d_m)
+void display_time(signed char h, signed char m)
 {
-	display_int(d_m);
-	ind[1] |= SEG_P;
+	if (h)
+	{
+		ind[0] = digimap[h];
+		ind[0] |= SEG_P;
+		ind[1] = digimap[m/10];
+	}
+	else
+	{
+		display_int(m);
+		ind[1] |= SEG_P;
+	}
 }
 
 void display_init(void)
