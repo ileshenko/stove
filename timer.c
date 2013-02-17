@@ -9,7 +9,7 @@
 
 static void (*timer_1ms)(void) = 0;
 static void (*timer_20ms)(void) = 0;
-static void (*timer_100ms)(void) = 0;
+static void (*timer_50ms)(void) = 0;
 
 void timer_reg_1ms(void (*cb)(void))
 {
@@ -21,9 +21,9 @@ void timer_reg_20ms(void (*cb)(void))
 	timer_20ms = cb;
 }
 
-void timer_reg_100ms(void (*cb)(void))
+void timer_reg_50ms(void (*cb)(void))
 {
-	timer_100ms = cb;
+	timer_50ms = cb;
 }
 
 void timer_reg_200ms(void (*cb)(void))
@@ -45,7 +45,7 @@ void timer_init(void)
 __interrupt void Timer_A (void)
 {
 	static int t20_cnt = 3;
-	static int t100_cnt = 5;
+	static int t50_cnt = 5;
 	static int t250_cnt = 7;
 
 	CCR0 += 1000; // Add Offset to CCR0
@@ -60,11 +60,11 @@ __interrupt void Timer_A (void)
 			timer_20ms();
 	}
 
-	if (!--t100_cnt)
+	if (!--t50_cnt)
 	{
-		t100_cnt = 100;
-		if (timer_100ms)
-			timer_100ms();
+		t50_cnt = 50;
+		if (timer_50ms)
+			timer_50ms();
 	}
 
 	if (!--t250_cnt)

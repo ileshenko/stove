@@ -17,7 +17,7 @@ static inline void sleep(void)
 
 void timer_reg_1ms(void (*cb)(void));
 void timer_reg_20ms(void (*cb)(void));
-void timer_reg_100ms(void (*cb)(void));
+void timer_reg_50ms(void (*cb)(void));
 void timer_reg_250ms(void (*cb)(void));
 
 

@@ -82,6 +82,8 @@ static void power_dec(char idx)
 
 static prg_t basic_prg(void)
 {
+	char cnt = 0;
+
 	for (;;)
 	{
 		if (HOUR || MINU)
@@ -105,7 +107,7 @@ static prg_t basic_prg(void)
 				d_s = 60*4;
 			}
 		}
-		if ((MINU || HOUR) && d_s & 0x4)
+		if ((MINU || HOUR) && cnt++ & 0x4)
 			display_time(HOUR, MINU);
 		else
 			display_int(power[0]);
@@ -115,11 +117,13 @@ static prg_t basic_prg(void)
 		case BTN_UP:
 		case BTN_UP_LONG:
 			power_inc(0);
+			cnt = 0;
 			break;
 
 		case BTN_DOWN:
 		case BTN_DOWN_LONG:
 			power_dec(0);
+			cnt = 0;
 			break;
 
 		case BTN_BOTH:
@@ -138,17 +142,14 @@ static prg_t basic_prg(void)
 
 static prg_t set_power2_prg(void)
 {
-	int timeout;
-	char cnt = 0;
-
-	timeout = TIMEOUT;
+	int timeout = TIMEOUT;
 
 	while (timeout)
 	{
-		if (cnt++&1)
-			display_int(power[1]);
-		else
+		if (timeout&1)
 			display("  ");
+		else
+			display_int(power[1]);
 		sleep();
 
 		switch (buttons_get())
@@ -231,14 +232,11 @@ static void timer_down(signed char *h, signed char *m)
 
 static prg_t set_timer(char idx)
 {
-	int timeout;
-	char cnt = 0;
-
-	timeout = TIMEOUT;
+	int timeout = TIMEOUT;
 
 	while (timeout)
 	{
-		if (idx && cnt++&1)
+		if (idx && timeout&1)
 			display("  ");
 		else
 			display_time(d_h[idx], d_m[idx]);

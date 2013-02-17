@@ -41,7 +41,7 @@ static void buttons_pool(void)
 		{
 			if (is_up)
 			{
-				if (++up_cnt >= 10)
+				if (++up_cnt >= 20)
 					btn_state = BTN_UP_LONG;
 			}
 			else
@@ -56,7 +56,7 @@ static void buttons_pool(void)
 		{
 			if (is_down)
 			{
-				if (++down_cnt >= 10)
+				if (++down_cnt >= 20)
 					btn_state = BTN_DOWN_LONG;
 			}
 			else
@@ -126,7 +126,7 @@ void buttons_init(void)
 //	P1IES |= BTN_TOGGLE;                            // Hi/lo edge
 //	P1IFG &= ~BTN_TOGGLE;                           // IFG cleared
 	btn_state = BTN_IDLE;
-	timer_reg_100ms(buttons_pool);
+	timer_reg_50ms(buttons_pool);
 }
 
 // Port 1 interrupt service routine

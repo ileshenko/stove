@@ -61,6 +61,7 @@ const unsigned char digimap[] = {
 	SEG_A|SEG_B|SEG_C|SEG_D|SEG_F|SEG_G,		// 9
 	SEG_G,										// -
 	0,											// " "
+	SEG_A|SEG_B|SEG_E|SEG_F|SEG_G,				// "P
 };
 
 static void seg_off(unsigned char seg)
@@ -106,6 +107,9 @@ static unsigned char translate(char ch)
 		break;
 	case ' ':
 		idx = 11;
+		break;
+	case 'P':
+		idx = 12;
 		break;
 	default:
 		idx = ch - '0';
